@@ -21,33 +21,47 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data mahaiswa</title>
+    <title>Data Mahasiswa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Data mahasiswa</h2>
-    <a href="tambah.php">Tambah data</a>
-    <br><br>
+    <nav class="site-navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="index.php">
+                <img src="assets/speda-logo.png" alt="">
+                <span>Speda</span>
+            </a>
+            <div class="nav-links">
+                <a class="active" href="index.php">Home</a>
+                <a href="tambah.php">Tambah Mahasiswa</a>
+            </div>
+        </div>
+    </nav>
 
-    <form action="" method="GET">
-        <input type="text" name="keyword" placeholder="Cari Nama Mahasigma">
-        <button type="submit">Cari</button>
-        <a href="index.php">Reset</a>
-    </form>
+    <main class="content-container">
+        <h1>Daftar Mahasiswa</h1>
+        <form class="search-form" action="" method="GET">
+            <input class="search-input" type="text" name="keyword" placeholder="Cari mahasiswa" value="<?php echo isset($_GET['keyword']) ? htmlspecialchars($_GET['keyword']) : ''; ?>">
+            <button class="button button-search" type="submit">Cari</button>
+        </form>
 
-    <table border="1" cellpadding="10">
-        <tr>
-            <th>ID</th>
-            <th>NIM</th>
-            <th>Nama</th>
-            <th>Jenis kelamin</th>
-            <th>Created at</th>
-            <th>Aksi</th>
-        </tr>
+        <div class="table-wrap">
+            <table class="student-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>NIM</th>
+                        <th>Nama</th>
+                        <th>Jenis Kelamin</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
 
         <?php
             if(mysqli_num_rows($query) > 0 ){
@@ -59,27 +73,29 @@
             <td><?php echo $data['nim']; ?></td>
             <td><?php echo $data['nama']; ?></td>
             <td><?php echo $data['jenis_kelamin']; ?></td>
-            <td><?php echo $data['created_at']; ?></td>
             <td>
-                <a href="update.php?id=<?php echo $data['id']; ?>">
-                    Edit
-                </a>
-                <button type="button" class="btn btn-danger"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalHapus<?php echo $data['id']; ?>">
-                    Hapus
-                </button>
+                <div class="actions">
+                    <a class="button button-primary" href="update.php?id=<?php echo $data['id']; ?>">Update</a>
+                    <button type="button" class="button button-danger"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalHapus<?php echo $data['id']; ?>">
+                        Delete
+                    </button>
+                </div>
             </td>
         </tr>
 
         <?php    
             } 
             } else {
-                echo "<tr><td colspan='6'>Tidak ada data!</td></tr>";
+                echo "<tr><td class='empty-state' colspan='5'>Tidak Ada Data !</td></tr>";
             }
         ?>
 
-    </table>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
     <?php
         mysqli_data_seek($query, 0);
@@ -97,8 +113,7 @@
                         </div>
 
                         <div class="modal-body">
-                            Data :
-                            <b><?php echo $data['nama']; ?></b> mau dihapus? yakin dek??
+                            Data mahasigma <b><?php echo $data['nama']; ?></b> akan dihapus, YAKIN DECK ?
                         </div>
 
                         <div class="modal-footer">

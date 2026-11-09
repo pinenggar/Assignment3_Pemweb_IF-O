@@ -40,36 +40,51 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Update Mahasiswa</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h2>Update Data Mahasiswa</h2>
-    <form action="" method="POST">    
-        <label for="">NIM : </label>
-        <input type="text" name="nim" value="<?php echo $data['nim']; ?>">
-        <br><br>
+    <nav class="site-navbar">
+        <div class="navbar-inner">
+            <a class="brand" href="index.php">
+                <img src="assets/speda-logo.png" alt="">
+                <span>Speda</span>
+            </a>
+            <div class="nav-links">
+                <a href="index.php">Home</a>
+                <a class="active" href="tambah.php">Tambah Mahasiswa</a>
+            </div>
+        </div>
+    </nav>
 
-        <label for="">Nama : </label>
-        <input type="text" name="nama" value="<?php echo $data['nama']; ?>">
-        <br><br>
-
-        <label for="">Jenis kelamin</label>
-        <select name="jenis_kelamin" id="">
-            <option value="laki laki" <?php if($data['jenis_kelamin'] == 'laki laki') echo 'selected'?>>
-                laki laki
-            </option>
-            <option value="perempuan" <?php if($data['jenis_kelamin'] == 'perempuan') echo 'selected'?>>
-                perempuan
-            </option>
-        </select>
-        <br><br>
-
-        <button type="submit" name="update">Update</button> <!--// tombol edit(simpan) belum sampai ke simpan ke database, tombol edit(simpan) baru hanya gimmick -->
-    </form>
-
+    <main class="content-container">
+        <h1>Update Mahasiswa</h1>
+        <form action="" method="POST" class="student-form">
+            <div class="field">
+                <label for="nim">NIM:</label>
+                <input class="form-control" id="nim" type="text" name="nim" value="<?php echo htmlspecialchars($data['nim']); ?>" required>
+            </div>
+            <div class="field">
+                <label for="nama">Nama:</label>
+                <input class="form-control" id="nama" type="text" name="nama" value="<?php echo htmlspecialchars($data['nama']); ?>" required>
+            </div>
+            <fieldset class="gender-field">
+                <legend>Jenis Kelamin</legend>
+                <label class="radio-option">
+                    <input type="radio" name="jenis_kelamin" value="laki laki" required <?php if($data['jenis_kelamin'] == 'laki laki') echo 'checked'; ?>>
+                    <span>Laki-laki</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="jenis_kelamin" value="perempuan" <?php if($data['jenis_kelamin'] == 'perempuan') echo 'checked'; ?>>
+                    <span>Perempuan</span>
+                </label>
+            </fieldset>
+            <button class="button button-primary" type="submit" name="update">Update Mahasiswa</button>
+        </form>
+    </main>
 </body>
 </html>
